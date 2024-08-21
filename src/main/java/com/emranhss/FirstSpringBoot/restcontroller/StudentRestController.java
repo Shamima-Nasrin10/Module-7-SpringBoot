@@ -30,4 +30,9 @@ public class StudentRestController {
        studentService.deleteById(id);
     }
 
+    @PutMapping("/update/{id}")
+    public void updateStudent(@RequestBody Student s, @PathVariable int id) {
+        studentService.updateStudent(s, id);
+    }
+
 }
