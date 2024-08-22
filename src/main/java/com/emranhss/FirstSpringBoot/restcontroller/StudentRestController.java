@@ -1,6 +1,5 @@
 package com.emranhss.FirstSpringBoot.restcontroller;
 
-
 import com.emranhss.FirstSpringBoot.entity.Student;
 import com.emranhss.FirstSpringBoot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
