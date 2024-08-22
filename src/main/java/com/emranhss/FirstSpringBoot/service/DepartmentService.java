@@ -19,7 +19,7 @@ public class DepartmentService {
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
     }
-    public void deleteDepartment(Integer id) {
+    public void deleteDepById(Integer id) {
         departmentRepository.deleteById(id);
     }
     public Department findById(Integer id) {
