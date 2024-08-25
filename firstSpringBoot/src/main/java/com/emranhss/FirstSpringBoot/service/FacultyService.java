@@ -18,8 +18,6 @@ public class FacultyService {
     private DepartmentRepository departmentRepository;
 
     public void saveFaculty(Faculty f) {
-        Department newDepartment = departmentRepository.findById(f.getDepartment().getId()).get();
-        f.setDepartment(newDepartment);
         facultyRepository.save(f);
     }
 
