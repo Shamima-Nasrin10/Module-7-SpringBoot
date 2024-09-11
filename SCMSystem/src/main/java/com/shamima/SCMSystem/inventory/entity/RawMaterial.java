@@ -30,6 +30,9 @@ public class RawMaterial {
     @Enumerated(EnumType.STRING)
     @Column(name = "unit", nullable = false)
     private Unit unit;
+
+
+    private String image;
     
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)
