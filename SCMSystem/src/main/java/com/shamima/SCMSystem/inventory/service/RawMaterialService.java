@@ -90,8 +90,8 @@ public class RawMaterialService {
         existingRM.setUnit(updatedRM.getUnit());
 
 //        Update Supplier
-        RawMaterialSupplier rmSupplier= rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId())
-                .orElseThrow(()-> new RuntimeException("Supplier with this ID not found"));
+        RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId())
+                .orElseThrow(() -> new RuntimeException("Supplier with this ID not found"));
         existingRM.setSupplier(rmSupplier);
 
         // Update image if provided
@@ -100,5 +100,9 @@ public class RawMaterialService {
             existingRM.setImage(imageFilename);
         }
         rawMaterialRepository.save(existingRM);
+    }
+
+    public List<RawMaterial> findRawMaterialsBySupplierName(String supplierName) {
+        return rawMaterialRepository.findRMBySupplierName(supplierName);
     }
 }
