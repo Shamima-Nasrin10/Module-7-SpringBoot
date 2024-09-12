@@ -5,6 +5,7 @@ import com.shamima.SCMSystem.inventory.entity.RawMaterialSupplier;
 import com.shamima.SCMSystem.inventory.service.RawMaterialService;
 import com.shamima.SCMSystem.inventory.service.RawMaterialSupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,9 +34,14 @@ public class RawMaterialSupplierController {
     }
 
 
-    @PostMapping("/update/")
-    public void updateRawMaterialSupplier(@RequestBody RawMaterialSupplier rmSupplier) {
-        rawMaterialSupplierService.saveRawMaterialSupplier(rmSupplier);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RawMaterialSupplier> updateRawMaterialSupplier(
+            @RequestBody RawMaterialSupplier rmSupplier,
+            @PathVariable long id) {
+        rmSupplier.setId(id);
+        RawMaterialSupplier updatedSupplier = rawMaterialSupplierService.updateRawMaterialSupplier(rmSupplier);
+        return ResponseEntity.ok(updatedSupplier);
+
     }
 
 

@@ -20,8 +20,8 @@ public class RawMaterialSupplierService {
         return rawMaterialSupplierRepository.findAll();
     }
 
-    public void saveRawMaterialSupplier(RawMaterialSupplier rawMaterialSupplier) {
-        rawMaterialSupplierRepository.save(rawMaterialSupplier);
+    public void saveRawMaterialSupplier(RawMaterialSupplier rmSupplier) {
+        rawMaterialSupplierRepository.save(rmSupplier);
     }
 
     public void deleteRawMaterialSupplier(Long id) {
@@ -31,5 +31,16 @@ public class RawMaterialSupplierService {
     public RawMaterialSupplier getRawMaterialSupplierById(Long id) {
         return rawMaterialSupplierRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("Supplier with id " + id + " not found"));
+    }
+
+    public RawMaterialSupplier updateRawMaterialSupplier(RawMaterialSupplier rmSupplier) {
+       RawMaterialSupplier old = getRawMaterialSupplierById(rmSupplier.getId());
+       old.setCompanyName(rmSupplier.getCompanyName());
+       old.setContactPerson(rmSupplier.getContactPerson());
+       old.setEmail(rmSupplier.getEmail());
+       old.setCellNo(rmSupplier.getCellNo());
+       old.setAddress(rmSupplier.getAddress());
+
+      return rawMaterialSupplierRepository.save(old);
     }
 }
