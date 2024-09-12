@@ -34,7 +34,7 @@ public class RawMaterial {
 
     private String image;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "supplier_id", nullable = false)
     private RawMaterialSupplier supplier;
 
