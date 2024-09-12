@@ -19,14 +19,19 @@ public class RawMaterialSupplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "name", nullable = false)
-    private String name;
-    
+    @Column(name = "company_name", nullable = false)
+    private String companyName;
+
+    @Column(name = "contact_person", nullable = false)
+    private String contactPerson;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "cell_no", nullable = false)
+    private String cellNo;
+
     @Column(name = "address", nullable = false)
     private String address;
-    
-    @Column(name = "contact", nullable = false)
-    private String contact;
-
     
 }

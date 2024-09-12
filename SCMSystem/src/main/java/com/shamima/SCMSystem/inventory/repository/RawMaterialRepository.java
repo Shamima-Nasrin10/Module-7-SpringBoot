@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long> {
 
-    @Query("SELECT rm FROM RawMaterial rm WHERE rm.supplier.name = :suppliername")
-    List<RawMaterial> findRMBySupplierName(@Param("supplierName") String suppliername);
+    @Query("SELECT rm FROM RawMaterial rm WHERE rm.supplier.companyName = :supplierName")
+    List<RawMaterial> findRMBySupplierName(@Param("supplierName") String supplierName);
 }
