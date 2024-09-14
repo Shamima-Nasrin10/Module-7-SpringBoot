@@ -56,8 +56,7 @@ public class RawMaterialService {
         rawMaterialRepository.deleteById(id);
     }
 
-    private RawMaterial getRawMaterialById(long id) {
-
+    public RawMaterial findRawMaterialById(long id) {
         return rawMaterialRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("RawMaterial with id" + id + "not found"));
     }
@@ -89,7 +88,7 @@ public class RawMaterialService {
         existingRM.setQuantity(updatedRM.getQuantity());
         existingRM.setUnit(updatedRM.getUnit());
 
-//        Update Supplier
+// Update Supplier
         RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId())
                 .orElseThrow(() -> new RuntimeException("Supplier with this ID not found"));
         existingRM.setSupplier(rmSupplier);
