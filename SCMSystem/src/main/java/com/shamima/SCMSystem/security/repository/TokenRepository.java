@@ -1,9 +1,9 @@
 package com.shamima.SCMSystem.security.repository;
 
-import com.shamima.SCMSystem.security.entity.User;
+import com.shamima.SCMSystem.security.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface TokenRepository extends JpaRepository<Token, Long> {
 }
