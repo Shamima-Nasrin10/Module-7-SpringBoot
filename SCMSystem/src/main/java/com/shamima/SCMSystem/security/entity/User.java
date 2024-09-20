@@ -45,6 +45,11 @@ public class User implements UserDetails {
 
     private String image;
 
+    @Column(nullable = false)
+    private boolean active;
+    @Column()
+    private boolean isLock;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
