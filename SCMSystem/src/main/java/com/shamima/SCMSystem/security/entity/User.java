@@ -31,23 +31,23 @@ public class User implements UserDetails {
     private String email;
 
     @Column(nullable = false)
-    @Size(min = 6, max = 20)
+//    @Size(min = 6, max = 20)
     private String password;
 
     @Column(unique = true)
     private String cell;
 
-    private String address;
+//    private String address;
+//
+//    private Date dob;
+//
+//    private String gender;
+//
+//    private String image;
 
-    private Date dob;
-
-    private String gender;
-
-    private String image;
-
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private boolean active;
-    @Column()
+//    @Column()
     private boolean isLock;
 
     @Enumerated(value = EnumType.STRING)
