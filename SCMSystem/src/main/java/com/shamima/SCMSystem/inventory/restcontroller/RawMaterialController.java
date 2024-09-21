@@ -20,9 +20,8 @@ public class RawMaterialController {
     private RawMaterialService rawMaterialService;
 
     @PostMapping("/save")
-    public ResponseEntity<RawMaterial> saveRawMaterial(
-            @RequestPart(value = "rawMaterial") RawMaterial rawMaterial,
-            @RequestParam(value = "imageFile", required = true) MultipartFile imageFile) throws Exception {
+    public ResponseEntity<RawMaterial> save(@RequestPart RawMaterial rawMaterial,
+                                            @RequestPart(required = false) MultipartFile imageFile) throws Exception {
 
         rawMaterialService.saveRawMaterial(rawMaterial, imageFile);
         return new ResponseEntity<>(rawMaterial, HttpStatus.OK);

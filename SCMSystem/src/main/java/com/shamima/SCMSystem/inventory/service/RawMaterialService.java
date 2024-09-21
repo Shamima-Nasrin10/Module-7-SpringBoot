@@ -43,7 +43,7 @@ public class RawMaterialService {
 
         System.out.println(rawMaterialSupplier.toString());
 
-        if (!imageFile.isEmpty() && imageFile != null) {
+        if (imageFile != null && !imageFile.isEmpty()) {
             String imageFileName = saveImage(imageFile, rm);
             rm.setImage(imageFileName);
         }
