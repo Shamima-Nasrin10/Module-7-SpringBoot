@@ -33,11 +33,11 @@ private final AuthService authService;
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
-//    @GetMapping("/activate/{id}")
-//    public ResponseEntity<String> activateUser(@PathVariable("id") int id) {
-//        String response = authService.activateUser(id);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/activate/{id}")
+    public ResponseEntity<String> activateUser(@PathVariable("id") int id) {
+        String response = authService.activateUser(id);
+        return ResponseEntity.ok(response);
+    }
 
 
 
