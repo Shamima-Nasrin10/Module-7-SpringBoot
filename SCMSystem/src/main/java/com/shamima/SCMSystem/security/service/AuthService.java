@@ -161,43 +161,43 @@ public class AuthService {
     }
 
 
-//    private void sendActivationEmail(User user) {
-//        String activationLink = "http://localhost:8080/activate/" + user.getId();
-//
-//        String mailText = "<h3>Dear " + user.getName()
-//                + ",</h3>"
-//                + "<p>Please click on the following link to confirm your account:</p>"
-//                + "<a href=\"" + activationLink + "\">Activate Account</a>"
-//                + "<br><br>Regards,<br>Hotel Booking";
-//
-//        String subject = "Confirm User Account";
-//
-//        try {
-//
-//            emailService.sendSimpleEmail(user.getEmail(), subject, mailText);
-//
-//        } catch (MessagingException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//
-//    }
+    private void sendActivationEmail(User user) {
+        String activationLink = "http://localhost:8080/activate/" + user.getId();
+
+        String mailText = "<h3>Dear " + user.getName()
+                + ",</h3>"
+                + "<p>Please click on the following link to confirm your account:</p>"
+                + "<a href=\"" + activationLink + "\">Activate Account</a>"
+                + "<br><br>Regards,<br>Hotel Booking";
+
+        String subject = "Confirm User Account";
+
+        try {
+
+            emailService.sendSimpleEmail(user.getEmail(), subject, mailText);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
 
 
-//    // Activate user based on the token
-//    public String activateUser(long id) {
-//
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not Found with this ID"));
-//
-//        if (user != null) {
-//
-//            user.setActive(true);
-//            //  user.setActivationToken(null); // Clear token after activation
-//            userRepository.save(user);
-//            return "User activated successfully!";
-//        } else {
-//            return "Invalid activation token!";
-//        }
-//    }
+    }
+
+
+    // Activate user based on the token
+    public String activateUser(long id) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not Found with this ID"));
+
+        if (user != null) {
+
+            user.setActive(true);
+            //  user.setActivationToken(null); // Clear token after activation
+            userRepository.save(user);
+            return "User activated successfully!";
+        } else {
+            return "Invalid activation token!";
+        }
+    }
 }

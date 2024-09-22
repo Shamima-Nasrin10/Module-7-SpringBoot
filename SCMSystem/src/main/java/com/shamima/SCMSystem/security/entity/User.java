@@ -37,17 +37,17 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String cell;
 
-//    private String address;
-//
-//    private Date dob;
-//
-//    private String gender;
-//
-//    private String image;
+    private String address;
 
-//    @Column(nullable = false)
+    private Date dob;
+
+    private String gender;
+
+    private String image;
+
+    @Column(nullable = false)
     private boolean active;
-//    @Column()
+    @Column()
     private boolean isLock;
 
     @Enumerated(value = EnumType.STRING)
