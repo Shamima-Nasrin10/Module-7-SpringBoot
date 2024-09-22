@@ -34,7 +34,7 @@ public class SecurityConfig {
                                         req.requestMatchers("/login", "/register/admin", "/register",
                                                         "api/rawmaterial/**", "api/supplier/**")
                                                 .permitAll()
-//                                                .requestMatchers("api/hotel/save", "api/room/save")
+                                                .requestMatchers("/images/**").permitAll()
 //                                                .hasAuthority("ADMIN")
 //                                                .requestMatchers("api/hotel/{id}", "api/room/{id}","api/hotel/all/**")
 //                                                .hasAnyAuthority("ADMIN", "HOTEL")

@@ -67,8 +67,12 @@ public class RawMaterialService {
             Files.createDirectories(uploadPath);
         }
 
+        String originalFilename = file.getOriginalFilename();
+        String fileExtension = originalFilename != null ?
+                originalFilename.substring(originalFilename.lastIndexOf('.')) : "";
+
         // Generate a unique filename
-        String filename = rm.getName() + "_" + UUID.randomUUID().toString();
+        String filename = rm.getName() + "_" + UUID.randomUUID() + fileExtension;
         Path filePath = uploadPath.resolve(filename);
 
         // Save the file
@@ -78,19 +82,20 @@ public class RawMaterialService {
     }
 
     @Transactional
-    public void updateRawMaterial(long id, RawMaterial updatedRM, MultipartFile imageFile) throws Exception {
-        RawMaterial existingRM = rawMaterialRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("RawMaterial with id" + id + "not found"));
+    public void updateRawMaterial(RawMaterial updatedRM, MultipartFile imageFile) throws Exception {
+        RawMaterial existingRM = rawMaterialRepository.findById(updatedRM.getId())
+                .orElseThrow(() -> new RuntimeException("RawMaterial with id" + updatedRM.getId() + "not found"));
 
-//Update Raw MAterial details
+        RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId())
+                .orElseThrow(() -> new RuntimeException("Supplier with this ID not found"));
+
+        //Update Raw MAterial details
         existingRM.setName(updatedRM.getName());
         existingRM.setPrice(updatedRM.getPrice());
         existingRM.setQuantity(updatedRM.getQuantity());
         existingRM.setUnit(updatedRM.getUnit());
 
-// Update Supplier
-        RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId())
-                .orElseThrow(() -> new RuntimeException("Supplier with this ID not found"));
+        // Update Supplier
         existingRM.setSupplier(rmSupplier);
 
         // Update image if provided

@@ -33,14 +33,12 @@ public class RawMaterialController {
         return ResponseEntity.ok(rawMaterials);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<RawMaterial> updateRawMaterial(
-            @RequestBody RawMaterial rm,
-            @RequestParam(value = "image") MultipartFile imageFile,
-            @PathVariable long id
+    @PutMapping("/update")
+    public ResponseEntity<RawMaterial> updateRawMaterial(@RequestPart RawMaterial rawMaterial,
+                                                         @RequestPart(required = false) MultipartFile imageFile
     ) throws Exception {
-        rawMaterialService.updateRawMaterial(id, rm, imageFile);
-        return ResponseEntity.ok(rm);
+        rawMaterialService.updateRawMaterial(rawMaterial, imageFile);
+        return ResponseEntity.ok(rawMaterial);
     }
 
     @GetMapping("/{id}")
