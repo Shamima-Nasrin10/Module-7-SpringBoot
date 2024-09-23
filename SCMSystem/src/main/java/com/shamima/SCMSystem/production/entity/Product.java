@@ -23,8 +23,8 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
     
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Column(name = "unit_price", nullable = false)
+    private Double unitPrice;
 
     @Column(name = "stock", nullable = false)
     private Integer stock;

@@ -35,6 +35,10 @@ public class RawMaterial {
     private String image;
     
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id", nullable = false)
+    private RawMaterialCategory category;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "supplier_id", nullable = false)
     private RawMaterialSupplier supplier;
 

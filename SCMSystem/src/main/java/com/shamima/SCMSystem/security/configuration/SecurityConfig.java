@@ -31,15 +31,14 @@ public class SecurityConfig {
                         .authorizeHttpRequests(
 
                                 req ->
-                                        req.requestMatchers("/login", "/register/admin", "/register",
-                                                        "api/rawmaterial/**", "api/supplier/**")
-                                                .permitAll()
+                                        req.requestMatchers("/login").permitAll()
                                                 .requestMatchers("/images/**").permitAll()
 //                                                .hasAuthority("ADMIN")
 //                                                .requestMatchers("api/hotel/{id}", "api/room/{id}","api/hotel/all/**")
 //                                                .hasAnyAuthority("ADMIN", "HOTEL")
 //                                                .requestMatchers("api/user/**")
 //                                                .hasAuthority("USER")
+                                                .requestMatchers("/api/**").permitAll()
 
                         )
                         .userDetailsService(userService)

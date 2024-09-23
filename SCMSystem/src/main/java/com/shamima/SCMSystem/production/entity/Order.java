@@ -31,8 +31,8 @@ public class Order {
     private Date expectedDeliveryDate;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "delivery_address", nullable = false)
-    private Date deliveryAddress;
+    @Column(name = "shipping_address", nullable = false)
+    private Date shippingAddress;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "stage")

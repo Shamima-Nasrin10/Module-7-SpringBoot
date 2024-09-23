@@ -4,6 +4,7 @@ import com.shamima.SCMSystem.inventory.entity.RawMaterial;
 import com.shamima.SCMSystem.inventory.entity.RawMaterialSupplier;
 import com.shamima.SCMSystem.inventory.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.inventory.repository.RawMaterialSupplierRepository;
+import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,36 +30,126 @@ public class RawMaterialService {
     @Value("src/main/resources/static/images")
     private String uploadDir;
 
-    public List<RawMaterial> getAllRawMaterials() {
-
-        return rawMaterialRepository.findAll();
-
+    public ApiResponse getAllRawMaterials() {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<RawMaterial> rawMaterials = rawMaterialRepository.findAll();
+            apiResponse.setSuccess(true);
+            apiResponse.setData("rawMaterials", rawMaterials);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
     }
 
     @Transactional
-    public void saveRawMaterial(RawMaterial rm, MultipartFile imageFile) throws Exception {
+    public ApiResponse saveRawMaterial(RawMaterial rm, MultipartFile imageFile) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterialSupplier rawMaterialSupplier = rawMaterialSupplierRepository.findById(rm.getSupplier().getId()).orElse(null);
+            if (rawMaterialSupplier == null) {
+                apiResponse.setMessage("Supplier not found");
+                return apiResponse;
+            }
 
-        RawMaterialSupplier rawMaterialSupplier = rawMaterialSupplierRepository.findById(rm.getSupplier().getId())
-                .orElseThrow(() -> new RuntimeException("Supplier with thid ID not found"));
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String imageFileName = saveImage(imageFile, rm);
+                rm.setImage(imageFileName);
+            }
+            rm.setSupplier(rawMaterialSupplier);
+            rawMaterialRepository.save(rm);
 
-        System.out.println(rawMaterialSupplier.toString());
-
-        if (imageFile != null && !imageFile.isEmpty()) {
-            String imageFileName = saveImage(imageFile, rm);
-            rm.setImage(imageFileName);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Raw Material saved successfully");
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
         }
-        rm.setSupplier(rawMaterialSupplier);
-        rawMaterialRepository.save(rm);
-
+        return apiResponse;
     }
 
-    public void deleteRawMaterialById(long id) {
-        rawMaterialRepository.deleteById(id);
+    public ApiResponse deleteRawMaterialById(long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterial rawMaterial = rawMaterialRepository.findById(id).orElse(null);
+            if (rawMaterial == null) {
+                apiResponse.setMessage("Raw Material not found");
+                return apiResponse;
+            }
+            rawMaterialRepository.deleteById(id);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Raw Material deleted successfully");
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
     }
 
-    public RawMaterial findRawMaterialById(long id) {
-        return rawMaterialRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("RawMaterial with id" + id + "not found"));
+    public ApiResponse findRawMaterialById(long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterial rawMaterial = rawMaterialRepository.findById(id).orElse(null);
+            if (rawMaterial == null) {
+                apiResponse.setMessage("Raw Material not found");
+                return apiResponse;
+            }
+            apiResponse.setSuccess(true);
+            apiResponse.setData("rawMaterial", rawMaterial);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    @Transactional
+    public ApiResponse updateRawMaterial(RawMaterial updatedRM, MultipartFile imageFile) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterial existingRM = rawMaterialRepository.findById(updatedRM.getId()).orElse(null);
+            if (existingRM == null) {
+                apiResponse.setMessage("Raw Material not found");
+                return apiResponse;
+            }
+
+            RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId()).orElse(null);
+            if (rmSupplier == null) {
+                apiResponse.setMessage("Supplier not found");
+                return apiResponse;
+            }
+
+            // Update Raw Material details
+            existingRM.setName(updatedRM.getName());
+            existingRM.setPrice(updatedRM.getPrice());
+            existingRM.setQuantity(updatedRM.getQuantity());
+            existingRM.setUnit(updatedRM.getUnit());
+
+            // Update Supplier
+            existingRM.setSupplier(rmSupplier);
+
+            // Update image if provided
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String imageFilename = saveImage(imageFile, existingRM);
+                existingRM.setImage(imageFilename);
+            }
+
+            rawMaterialRepository.save(existingRM);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Raw Material updated successfully");
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse findRawMaterialsBySupplierId(long supplierId) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<RawMaterial> rawMaterials = rawMaterialRepository.findRawMaterialsBySupplierId(supplierId);
+            apiResponse.setSuccess(true);
+            apiResponse.setData("rawMaterials", rawMaterials);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
     }
 
     private String saveImage(MultipartFile file, RawMaterial rm) throws IOException {
@@ -80,33 +171,5 @@ public class RawMaterialService {
 
         return filename; // Return the filename for storing in the database
     }
-
-    @Transactional
-    public void updateRawMaterial(RawMaterial updatedRM, MultipartFile imageFile) throws Exception {
-        RawMaterial existingRM = rawMaterialRepository.findById(updatedRM.getId())
-                .orElseThrow(() -> new RuntimeException("RawMaterial with id" + updatedRM.getId() + "not found"));
-
-        RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId())
-                .orElseThrow(() -> new RuntimeException("Supplier with this ID not found"));
-
-        //Update Raw MAterial details
-        existingRM.setName(updatedRM.getName());
-        existingRM.setPrice(updatedRM.getPrice());
-        existingRM.setQuantity(updatedRM.getQuantity());
-        existingRM.setUnit(updatedRM.getUnit());
-
-        // Update Supplier
-        existingRM.setSupplier(rmSupplier);
-
-        // Update image if provided
-        if (imageFile != null && !imageFile.isEmpty()) {
-            String imageFilename = saveImage(imageFile, existingRM);
-            existingRM.setImage(imageFilename);
-        }
-        rawMaterialRepository.save(existingRM);
-    }
-
-    public List<RawMaterial> findRawMaterialsBySupplierName(String supplierName) {
-        return rawMaterialRepository.findRMBySupplierName(supplierName);
-    }
 }
+

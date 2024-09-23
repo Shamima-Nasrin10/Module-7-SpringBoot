@@ -1,6 +1,7 @@
 package com.shamima.SCMSystem.inventory.repository;
 
 import com.shamima.SCMSystem.inventory.entity.RawMaterial;
+import com.shamima.SCMSystem.inventory.entity.RawMaterialCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,9 +11,6 @@ import java.util.List;
 
 
 @Repository
-public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long> {
+public interface RawMaterialCategoryRepository extends JpaRepository<RawMaterialCategory, Long> {
 
-    List<RawMaterial> findRawMaterialsBySupplierId(long supplierId);
-
-    List<RawMaterial> findAllByCategoryId(Long categoryId);
 }

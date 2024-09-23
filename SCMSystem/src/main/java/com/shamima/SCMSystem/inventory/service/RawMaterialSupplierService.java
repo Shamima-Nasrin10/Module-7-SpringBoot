@@ -1,10 +1,9 @@
 package com.shamima.SCMSystem.inventory.service;
 
 
-import com.shamima.SCMSystem.inventory.entity.RawMaterial;
 import com.shamima.SCMSystem.inventory.entity.RawMaterialSupplier;
-import com.shamima.SCMSystem.inventory.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.inventory.repository.RawMaterialSupplierRepository;
+import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,31 +15,83 @@ public class RawMaterialSupplierService {
     @Autowired
     private RawMaterialSupplierRepository rawMaterialSupplierRepository;
 
-    public List<RawMaterialSupplier> getAllRawMaterialSuppliers() {
-        return rawMaterialSupplierRepository.findAll();
+    public ApiResponse getAllRawMaterialSuppliers() {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<RawMaterialSupplier> rawMaterialSuppliers = rawMaterialSupplierRepository.findAll();
+            apiResponse.setSuccess(true);
+            apiResponse.setData("rawMaterialSuppliers", rawMaterialSuppliers);
+            return apiResponse;
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+            return apiResponse;
+        }
     }
 
-    public void saveRawMaterialSupplier(RawMaterialSupplier rmSupplier) {
-        rawMaterialSupplierRepository.save(rmSupplier);
+    public ApiResponse saveRawMaterialSupplier(RawMaterialSupplier rmSupplier) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            rawMaterialSupplierRepository.save(rmSupplier);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Supplier saved successfully");
+            return apiResponse;
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+            return apiResponse;
+        }
     }
 
-    public void deleteRawMaterialSupplier(Long id) {
-        rawMaterialSupplierRepository.deleteById(id);
+    public ApiResponse updateRawMaterialSupplier(RawMaterialSupplier supplier) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterialSupplier existingSupplier = rawMaterialSupplierRepository.findById(supplier.getId()).orElse(null);
+            if (existingSupplier == null) {
+                apiResponse.setMessage("Supplier not found");
+                return apiResponse;
+            }
+            rawMaterialSupplierRepository.save(supplier);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Supplier updated successfully");
+            return apiResponse;
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+            return apiResponse;
+        }
     }
 
-    public RawMaterialSupplier getRawMaterialSupplierById(Long id) {
-        return rawMaterialSupplierRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Supplier with id " + id + " not found"));
+    public ApiResponse deleteRawMaterialSupplier(Long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterialSupplier supplier = rawMaterialSupplierRepository.findById(id).orElse(null);
+            if (supplier == null) {
+                apiResponse.setMessage("Supplier not found");
+                return apiResponse;
+            }
+            rawMaterialSupplierRepository.deleteById(id);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Supplier deleted successfully");
+            return apiResponse;
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+            return apiResponse;
+        }
     }
 
-    public RawMaterialSupplier updateRawMaterialSupplier(RawMaterialSupplier rmSupplier) {
-       RawMaterialSupplier old = getRawMaterialSupplierById(rmSupplier.getId());
-       old.setCompanyName(rmSupplier.getCompanyName());
-       old.setContactPerson(rmSupplier.getContactPerson());
-       old.setEmail(rmSupplier.getEmail());
-       old.setCellNo(rmSupplier.getCellNo());
-       old.setAddress(rmSupplier.getAddress());
-
-      return rawMaterialSupplierRepository.save(old);
+    public ApiResponse getRawMaterialSupplierById(Long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            RawMaterialSupplier supplier = rawMaterialSupplierRepository.findById(id).orElse(null);
+            if (supplier == null) {
+                apiResponse.setMessage("Supplier not found");
+                return apiResponse;
+            }
+            apiResponse.setSuccess(true);
+            apiResponse.setData("rawMaterialSupplier", supplier);
+            return apiResponse;
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+            return apiResponse;
+        }
     }
+
 }

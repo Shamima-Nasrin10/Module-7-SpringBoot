@@ -1,15 +1,11 @@
 package com.shamima.SCMSystem.inventory.restcontroller;
 
-
 import com.shamima.SCMSystem.inventory.entity.RawMaterial;
 import com.shamima.SCMSystem.inventory.service.RawMaterialService;
+import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/rawmaterial")
@@ -20,48 +16,35 @@ public class RawMaterialController {
     private RawMaterialService rawMaterialService;
 
     @PostMapping("/save")
-    public ResponseEntity<RawMaterial> save(@RequestPart RawMaterial rawMaterial,
-                                            @RequestPart(required = false) MultipartFile imageFile) throws Exception {
-
-        rawMaterialService.saveRawMaterial(rawMaterial, imageFile);
-        return new ResponseEntity<>(rawMaterial, HttpStatus.OK);
+    public ApiResponse save(@RequestPart RawMaterial rawMaterial,
+                            @RequestPart(required = false) MultipartFile imageFile) {
+        return rawMaterialService.saveRawMaterial(rawMaterial, imageFile);
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<RawMaterial>> getRawMaterials() {
-        List<RawMaterial> rawMaterials = rawMaterialService.getAllRawMaterials();
-        return ResponseEntity.ok(rawMaterials);
+    public ApiResponse getRawMaterials() {
+        return rawMaterialService.getAllRawMaterials();
     }
 
     @PutMapping("/update")
-    public ResponseEntity<RawMaterial> updateRawMaterial(@RequestPart RawMaterial rawMaterial,
-                                                         @RequestPart(required = false) MultipartFile imageFile
-    ) throws Exception {
-        rawMaterialService.updateRawMaterial(rawMaterial, imageFile);
-        return ResponseEntity.ok(rawMaterial);
+    public ApiResponse updateRawMaterial(@RequestPart RawMaterial rawMaterial,
+                                         @RequestPart(required = false) MultipartFile imageFile) {
+        return rawMaterialService.updateRawMaterial(rawMaterial, imageFile);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RawMaterial> findRoomById(@PathVariable int id) {
-        try {
-            RawMaterial rm = rawMaterialService.findRawMaterialById(id);
-            return ResponseEntity.ok(rm);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public ApiResponse findRawMaterialById(@PathVariable long id) {
+        return rawMaterialService.findRawMaterialById(id);
     }
 
-    @GetMapping("/r/searchrawmaterial")
-    public ResponseEntity<List<RawMaterial>> findRoomBySupplierName(@RequestParam("supplierName") String supplierlName) {
-        List<RawMaterial> rm = rawMaterialService.findRawMaterialsBySupplierName(supplierlName);
-        return ResponseEntity.ok(rm);
+    @GetMapping("/search")
+    public ApiResponse findRawMaterialsBySupplierId(@RequestParam long supplierId) {
+        return rawMaterialService.findRawMaterialsBySupplierId(supplierId);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteRawMaterialById(@PathVariable long id) {
-        rawMaterialService.deleteRawMaterialById(id);
-        return ResponseEntity.noContent().build();
+    public ApiResponse deleteRawMaterialById(@PathVariable long id) {
+        return rawMaterialService.deleteRawMaterialById(id);
     }
-
-
 }
+
