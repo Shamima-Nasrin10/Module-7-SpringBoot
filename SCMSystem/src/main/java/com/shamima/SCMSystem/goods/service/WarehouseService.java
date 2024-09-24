@@ -28,22 +28,18 @@ public class WarehouseService {
 
     public Warehouse addInventoryToWarehouse(Long warehouseId, Inventory inventory) {
         try {
-            // Try to find the warehouse by ID
             Warehouse warehouse = warehouseRepository.findById(warehouseId)
                     .orElseThrow(() -> new RuntimeException("Warehouse not found with ID: " + warehouseId));
 
-            // Set the warehouse for the inventory
+
             inventory.setWarehouse(warehouse);
 
-            // Save the inventory
             inventoryRepository.save(inventory);
 
             return warehouse;
         } catch (RuntimeException e) {
-            // Handle any exceptions, including when the warehouse is not found
             throw new RuntimeException("Failed to add inventory to warehouse: " + e.getMessage());
         } catch (Exception e) {
-            // Catch any other unexpected exceptions
             throw new RuntimeException("An unexpected error occurred: " + e.getMessage());
         }
     }
