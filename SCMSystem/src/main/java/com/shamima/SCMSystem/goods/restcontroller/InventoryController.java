@@ -13,27 +13,25 @@ public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
 
-    // Save a new inventory and associate it with a warehouse
     @PostMapping("/save")
     public ApiResponse saveInventory(@RequestBody Inventory inventory,
                                      @RequestParam Long warehouseId) {
         return inventoryService.saveInventory(inventory, warehouseId);
     }
 
-    // Get all inventories
-    @GetMapping
+    @GetMapping("/list")
     public ApiResponse getInventories() {
         return inventoryService.getAllInventories();
     }
 
-    // Get a specific inventory by ID
+
     @GetMapping("/{id}")
     public ApiResponse getInventoryById(@PathVariable long id) {
         return inventoryService.findInventoryById(id);
     }
 
-    // Update an existing inventory and associate it with a warehouse
-    @PutMapping("/{id}")
+
+    @PutMapping("/update")
     public ApiResponse updateInventory(@PathVariable Long id,
                                        @RequestBody Inventory inventory,
                                        @RequestParam Long warehouseId) {
@@ -41,9 +39,13 @@ public class InventoryController {
         return inventoryService.updateInventory(inventory, warehouseId);
     }
 
-    // Delete an inventory by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ApiResponse deleteInventoryById(@PathVariable long id) {
         return inventoryService.deleteInventoryById(id);
+    }
+
+    @GetMapping("/{id}/products")
+    public ApiResponse getProductsByInventoryId(@PathVariable Long id) {
+        return inventoryService.getProductsByInventoryId(id);
     }
 }

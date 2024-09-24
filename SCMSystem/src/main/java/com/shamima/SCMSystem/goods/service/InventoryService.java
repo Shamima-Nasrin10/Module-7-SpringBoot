@@ -126,7 +126,6 @@ public class InventoryService {
         return apiResponse;
     }
 
-    // New Method: Get Products by Inventory ID
     public ApiResponse getProductsByInventoryId(Long inventoryId) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
