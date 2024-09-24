@@ -1,6 +1,7 @@
 package com.shamima.SCMSystem.goods.service;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
+import com.shamima.SCMSystem.goods.entity.Product;
 import com.shamima.SCMSystem.goods.entity.Warehouse;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
 import com.shamima.SCMSystem.goods.repository.ProductRepository;
@@ -19,6 +20,9 @@ public class InventoryService {
 
     @Autowired
     private WarehouseRepository warehouseRepository;
+
+    @Autowired
+    private ProductRepository productRepository;  // Add ProductRepository for product-related operations
 
     // Save Inventory
     @Transactional
@@ -122,5 +126,19 @@ public class InventoryService {
         return apiResponse;
     }
 
+    // New Method: Get Products by Inventory ID
+    public ApiResponse getProductsByInventoryId(Long inventoryId) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Inventory inventory = inventoryRepository.findById(inventoryId)
+                    .orElseThrow(() -> new RuntimeException("Inventory not found"));
+            List<Product> products = inventory.getProducts(); // Assuming a getter for products exists in Inventory entity
+            apiResponse.setSuccess(true);
+            apiResponse.setData("products", products);
+        } catch (Exception e) {
+            apiResponse.setMessage("Failed to fetch products: " + e.getMessage());
+        }
+        return apiResponse;
+    }
 
 }
