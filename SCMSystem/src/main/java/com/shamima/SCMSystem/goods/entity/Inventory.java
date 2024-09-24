@@ -1,11 +1,14 @@
 package com.shamima.SCMSystem.goods.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,10 +27,13 @@ public class Inventory {
     @Column(nullable = false)
     private long capacity;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> products;
+
     @ManyToOne
-    @JoinColumn(nullable = false)
     @JsonBackReference
-    @Column(name = "warehouse_id")
+    @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
     private InventoryCategory category;

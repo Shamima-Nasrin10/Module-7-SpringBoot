@@ -1,5 +1,6 @@
 package com.shamima.SCMSystem.goods.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,14 +21,16 @@ public class Product {
 
     @Column(name = "name", nullable = false)
     private String name;
-    
+
     @Column(name = "unit_price", nullable = false)
     private Double unitPrice;
 
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
+    private String batch;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "inventory_id")
     private Inventory inventory;
@@ -44,5 +47,5 @@ public class Product {
         KG,
         GRAM
     }
-    
+
 }

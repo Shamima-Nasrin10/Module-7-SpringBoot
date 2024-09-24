@@ -1,8 +1,10 @@
 package com.shamima.SCMSystem.goods.service;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
+import com.shamima.SCMSystem.goods.entity.Product;
 import com.shamima.SCMSystem.goods.entity.Warehouse;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
+import com.shamima.SCMSystem.goods.repository.ProductRepository;
 import com.shamima.SCMSystem.goods.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class WarehouseService {
 
     @Autowired
     private InventoryRepository inventoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public ApiResponse getAllWarehouses() {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -41,6 +46,7 @@ public class WarehouseService {
             }
             apiResponse.setSuccess(true);
             apiResponse.setData("warehouse", warehouse);
+            apiResponse.setData("inventories", warehouse.getInventories());  // Include inventories
         } catch (Exception e) {
             apiResponse.setMessage(e.getMessage());
         }
@@ -103,11 +109,11 @@ public class WarehouseService {
     }
 
     @Transactional
-    public ApiResponse addInventoryToWarehouse(Long warehouseId, Inventory inventory) {
+    public ApiResponse addInventoryToWarehouse(Long id, Inventory inventory) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Warehouse warehouse = warehouseRepository.findById(warehouseId)
-                    .orElseThrow(() -> new RuntimeException("Warehouse not found with ID: " + warehouseId));
+            Warehouse warehouse = warehouseRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Warehouse not found with ID: " + id));
 
             inventory.setWarehouse(warehouse);
             inventoryRepository.save(inventory);
@@ -116,6 +122,21 @@ public class WarehouseService {
             apiResponse.setMessage("Inventory added to warehouse successfully");
         } catch (Exception e) {
             apiResponse.setMessage("Failed to add inventory to warehouse: " + e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    // New Method: Get products by inventory
+    public ApiResponse getProductsByInventoryId(Long inventoryId) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Inventory inventory = inventoryRepository.findById(inventoryId)
+                    .orElseThrow(() -> new RuntimeException("Inventory not found"));
+            List<Product> products = inventory.getProducts(); // Assuming the relationship is set correctly
+            apiResponse.setSuccess(true);
+            apiResponse.setData("products", products);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
         }
         return apiResponse;
     }
