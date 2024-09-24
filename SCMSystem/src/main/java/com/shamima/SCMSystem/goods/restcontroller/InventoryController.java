@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
-    
+
     @PostMapping("/save")
     public ApiResponse saveInventory(@RequestPart Inventory inventory,
                                      @RequestParam Long warehouseId) {
