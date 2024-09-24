@@ -13,26 +13,25 @@ public class WarehouseController {
 
     @Autowired
     private WarehouseService warehouseService;
-
-    // Save a new warehouse
+    
     @PostMapping("/save")
     public ApiResponse saveWarehouse(@RequestBody Warehouse warehouse) {
         return warehouseService.saveWarehouse(warehouse);
     }
 
-    // Get all warehouses
+
     @GetMapping("/list")
     public ApiResponse getAllWarehouses() {
         return warehouseService.getAllWarehouses();
     }
 
-    // Update an existing warehouse
+
     @PutMapping("/update")
     public ApiResponse updateWarehouse(@RequestBody Warehouse warehouse) {
         return warehouseService.updateWarehouse(warehouse);
     }
 
-    // Find warehouse by ID and include its inventories
+
     @GetMapping("/{id}")
     public ApiResponse findWarehouseById(@PathVariable long id) {
         return warehouseService.findWarehouseById(id);
