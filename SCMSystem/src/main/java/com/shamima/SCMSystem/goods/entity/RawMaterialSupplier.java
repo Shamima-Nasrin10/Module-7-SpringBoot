@@ -1,4 +1,4 @@
-package com.shamima.SCMSystem.inventory.entity;
+package com.shamima.SCMSystem.goods.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

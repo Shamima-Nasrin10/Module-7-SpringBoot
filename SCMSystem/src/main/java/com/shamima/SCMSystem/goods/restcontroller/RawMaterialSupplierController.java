@@ -1,7 +1,7 @@
-package com.shamima.SCMSystem.inventory.restcontroller;
+package com.shamima.SCMSystem.goods.restcontroller;
 
-import com.shamima.SCMSystem.inventory.entity.RawMaterialSupplier;
-import com.shamima.SCMSystem.inventory.service.RawMaterialSupplierService;
+import com.shamima.SCMSystem.goods.entity.RawMaterialSupplier;
+import com.shamima.SCMSystem.goods.service.RawMaterialSupplierService;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

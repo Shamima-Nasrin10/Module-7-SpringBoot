@@ -1,7 +1,5 @@
-package com.shamima.SCMSystem.production.entity;
+package com.shamima.SCMSystem.goods.entity;
 
-import com.shamima.SCMSystem.inventory.entity.RawMaterialSupplier;
-import com.shamima.SCMSystem.security.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,18 +27,22 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "size", nullable = false)
-    private Size size;
 
-    public enum Size {
-        XS,
-        S,
-        M,
-        L,
-        XL,
-        XXL,
-        XXXL
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "inventory_id")
+    private Inventory inventory;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "unit", nullable = false)
+    private RawMaterial.Unit unit;
+
+    public enum Unit {
+        METER,
+        PIECE,
+        FEET,
+        INCH,
+        KG,
+        GRAM
     }
     
 }

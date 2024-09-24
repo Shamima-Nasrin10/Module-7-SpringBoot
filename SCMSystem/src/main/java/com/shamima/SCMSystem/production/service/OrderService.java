@@ -1,6 +1,6 @@
 package com.shamima.SCMSystem.production.service;
 
-import com.shamima.SCMSystem.inventory.entity.RawMaterial;
+import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import com.shamima.SCMSystem.production.entity.Order;
 import com.shamima.SCMSystem.production.repository.OrderRepository;
 import jakarta.transaction.Transactional;
@@ -19,34 +19,34 @@ public class OrderService {
         // create order
     }
 
-    @Transactional
-    public void updateOrder(Order order, List<RawMaterial> rawMaterials) {
-        if (order.getStage().equals(Order.ManufacturingStage.CUTTING)) {
-            if (rawMaterials.isEmpty()) {
-                // return error
-            } else {
-                for (RawMaterial rawMaterial : rawMaterials) {
-                    // RawMaterial dbRawMaterial = rawMaterialRepository.getById(rawMaterial.getId());
-                    // dbRawMaterial.setQuantity(dbRawMaterial.getQuantity() - rawMaterial.getQuantity());
-                    // rawMaterialRepository.save(dbRawMaterial);
-                }
-            }
-        } else if (order.getStage().equals(Order.ManufacturingStage.WAREHOUSE)) {
-            // for (OrderItem orderItem : order.getOrderItems()) {
-            //     Product dbProduct = productRepository.getById(orderItem.getProduct().getId());
-            //     dbProduct.setQuantity(dbProduct.getQuantity() + orderItem.getQuantity());
-            //     productRepository.save(dbProduct);
-            // }
-
-        } else if (order.getStage().equals(Order.ManufacturingStage.SHIPPED)) {
-            // for (OrderItem orderItem : order.getOrderItems()) {
-            //     Product dbProduct = productRepository.getById(orderItem.getProduct().getId());
-            //     dbProduct.setQuantity(dbProduct.getQuantity() - orderItem.getQuantity());
-            //     productRepository.save(dbProduct);
-            // }
-        }
-        // orderRepository.save(order);
-    }
+//    @Transactional
+//    public void updateOrder(Order order, List<RawMaterial> rawMaterials) {
+//        if (order.getStage().equals(Order.ManufacturingStage.CUTTING)) {
+//            if (rawMaterials.isEmpty()) {
+//                // return error
+//            } else {
+//                for (RawMaterial rawMaterial : rawMaterials) {
+//                    // RawMaterial dbRawMaterial = rawMaterialRepository.getById(rawMaterial.getId());
+//                    // dbRawMaterial.setQuantity(dbRawMaterial.getQuantity() - rawMaterial.getQuantity());
+//                    // rawMaterialRepository.save(dbRawMaterial);
+//                }
+//            }
+//        } else if (order.getStage().equals(Order.ManufacturingStage.WAREHOUSE)) {
+//            // for (OrderItem orderItem : order.getOrderItems()) {
+//            //     Product dbProduct = productRepository.getById(orderItem.getProduct().getId());
+//            //     dbProduct.setQuantity(dbProduct.getQuantity() + orderItem.getQuantity());
+//            //     productRepository.save(dbProduct);
+//            // }
+//
+//        } else if (order.getStage().equals(Order.ManufacturingStage.SHIPPED)) {
+//            // for (OrderItem orderItem : order.getOrderItems()) {
+//            //     Product dbProduct = productRepository.getById(orderItem.getProduct().getId());
+//            //     dbProduct.setQuantity(dbProduct.getQuantity() - orderItem.getQuantity());
+//            //     productRepository.save(dbProduct);
+//            // }
+//        }
+//        // orderRepository.save(order);
+//    }
 
     @Transactional
     public void deleteOrder() {

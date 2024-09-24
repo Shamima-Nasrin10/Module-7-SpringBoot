@@ -1,9 +1,9 @@
-package com.shamima.SCMSystem.inventory.service;
+package com.shamima.SCMSystem.goods.service;
 
-import com.shamima.SCMSystem.inventory.entity.RawMaterial;
-import com.shamima.SCMSystem.inventory.entity.RawMaterialCategory;
-import com.shamima.SCMSystem.inventory.repository.RawMaterialCategoryRepository;
-import com.shamima.SCMSystem.inventory.repository.RawMaterialRepository;
+import com.shamima.SCMSystem.goods.entity.RawMaterial;
+import com.shamima.SCMSystem.goods.entity.RawMaterialCategory;
+import com.shamima.SCMSystem.goods.repository.RawMaterialCategoryRepository;
+import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

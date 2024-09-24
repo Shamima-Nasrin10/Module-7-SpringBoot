@@ -35,10 +35,6 @@ public class Order {
     private Date shippingAddress;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "stage")
-    private ManufacturingStage stage;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
@@ -49,15 +45,6 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private User customer;
 
-    public enum ManufacturingStage {
-        CUTTING,
-        SEWING,
-        WASHING,
-        IRONING,
-        QUALITY_CONTROL,
-        WAREHOUSE,
-        SHIPPED
-    }
 
     public enum OrderStatus {
         PENDING,

@@ -1,6 +1,6 @@
-package com.shamima.SCMSystem.inventory.repository;
+package com.shamima.SCMSystem.goods.repository;
 
-import com.shamima.SCMSystem.inventory.entity.RawMaterialSupplier;
+import com.shamima.SCMSystem.goods.entity.RawMaterialSupplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
