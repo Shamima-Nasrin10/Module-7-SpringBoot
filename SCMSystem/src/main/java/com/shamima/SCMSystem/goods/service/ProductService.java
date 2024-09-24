@@ -18,7 +18,7 @@ public class ProductService {
 
     @Autowired
     private InventoryRepository inventoryRepository;
-    
+
     @Transactional
     public ApiResponse saveProduct(Product product, Long inventoryId) {
         ApiResponse apiResponse = new ApiResponse(false);
