@@ -13,7 +13,7 @@ public class WarehouseController {
 
     @Autowired
     private WarehouseService warehouseService;
-    
+
     @PostMapping("/save")
     public ApiResponse saveWarehouse(@RequestBody Warehouse warehouse) {
         return warehouseService.saveWarehouse(warehouse);
