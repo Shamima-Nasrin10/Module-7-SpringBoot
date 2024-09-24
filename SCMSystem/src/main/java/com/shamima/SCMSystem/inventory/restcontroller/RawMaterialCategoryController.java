@@ -30,7 +30,7 @@ public class RawMaterialCategoryController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse findRawMaterialCategoryById(@PathVariable int id) {
+    public ApiResponse findRawMaterialCategoryById(@PathVariable long id) {
         return rawMaterialCategoryService.findRawMaterialCategoryById(id);
     }
 
