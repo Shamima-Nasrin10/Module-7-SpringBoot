@@ -28,9 +28,10 @@ public class ApiResponse {
     }
 
     public void setData(String key, Object value) {
-        Map<String, Object> data = new HashMap<>();
+        if (data == null) {
+            data = new HashMap<>();
+        }
         data.put(key, value);
-        this.data = data;
     }
 
 }
