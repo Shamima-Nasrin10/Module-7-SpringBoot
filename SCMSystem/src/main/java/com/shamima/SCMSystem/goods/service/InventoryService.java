@@ -22,9 +22,9 @@ public class InventoryService {
     private WarehouseRepository warehouseRepository;
 
     @Autowired
-    private ProductRepository productRepository;  // Add ProductRepository for product-related operations
+    private ProductRepository productRepository;
 
-    // Save Inventory
+
     @Transactional
     public ApiResponse saveInventory(Inventory inventory, Long warehouseId) {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -45,7 +45,7 @@ public class InventoryService {
         return apiResponse;
     }
 
-    // Get all Inventories
+
     public ApiResponse getAllInventories() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
@@ -58,7 +58,7 @@ public class InventoryService {
         return apiResponse;
     }
 
-    // Find Inventory by ID
+
     public ApiResponse findInventoryById(long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
@@ -75,7 +75,6 @@ public class InventoryService {
         return apiResponse;
     }
 
-    // Update Inventory
     @Transactional
     public ApiResponse updateInventory(Inventory updatedInventory, Long warehouseId) {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -106,7 +105,6 @@ public class InventoryService {
         return apiResponse;
     }
 
-    // Delete Inventory
     @Transactional
     public ApiResponse deleteInventoryById(long id) {
         ApiResponse apiResponse = new ApiResponse(false);
