@@ -31,7 +31,7 @@ public class InventoryController {
     }
 
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     public ApiResponse updateInventory(@PathVariable Long id,
                                        @RequestBody Inventory inventory,
                                        @RequestParam Long warehouseId) {
