@@ -79,17 +79,11 @@ public class InventoryService {
     public ApiResponse updateInventory(Inventory updatedInventory, Long warehouseId) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Inventory existingInventory = inventoryRepository.findById(updatedInventory.getId()).orElse(null);
-            if (existingInventory == null) {
-                apiResponse.setMessage("Inventory not found");
-                return apiResponse;
-            }
+            Inventory existingInventory = inventoryRepository.findById(updatedInventory.getId())
+                    .orElseThrow(() -> new RuntimeException("Inventory not found with ID: " + updatedInventory.getId()));
 
-            Warehouse warehouse = warehouseRepository.findById(warehouseId).orElse(null);
-            if (warehouse == null) {
-                apiResponse.setMessage("Warehouse not found");
-                return apiResponse;
-            }
+            Warehouse warehouse = warehouseRepository.findById(warehouseId)
+                    .orElseThrow(() -> new RuntimeException("Warehouse not found with ID: " + warehouseId));
 
             existingInventory.setName(updatedInventory.getName());
             existingInventory.setCapacity(updatedInventory.getCapacity());
@@ -129,7 +123,7 @@ public class InventoryService {
         try {
             Inventory inventory = inventoryRepository.findById(inventoryId)
                     .orElseThrow(() -> new RuntimeException("Inventory not found"));
-            List<Product> products = inventory.getProducts(); // Assuming a getter for products exists in Inventory entity
+            List<Product> products = inventory.getProducts();
             apiResponse.setSuccess(true);
             apiResponse.setData("products", products);
         } catch (Exception e) {
