@@ -10,18 +10,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/inventory")
 public class InventoryController {
+
     @Autowired
     private InventoryService inventoryService;
 
     @PostMapping("/save")
-    public ApiResponse saveInventory(@RequestBody Inventory inventory,
-                                     @RequestParam Long warehouseId) {
-        return inventoryService.saveInventory(inventory, warehouseId);
+    public ApiResponse saveInventory(@RequestBody Inventory inventory) {
+        return inventoryService.saveInventory(inventory);
     }
 
     @GetMapping("/list")
     public ApiResponse getInventories() {
         return inventoryService.getAllInventories();
+    }
+
+    @GetMapping("/getInventoriesByWarehouseId")
+    public ApiResponse getInventoriesByWarehouseId(@RequestParam long warehouseId) {
+        return inventoryService.getInventoriesByWarehouseId(warehouseId);
     }
 
 
@@ -31,21 +36,13 @@ public class InventoryController {
     }
 
 
-    @PutMapping("/update/{id}")
-    public ApiResponse updateInventory(@PathVariable Long id,
-                                       @RequestBody Inventory inventory,
-                                       @RequestParam Long warehouseId) {
-        inventory.setId(id); // Ensure the ID is set correctly
-        return inventoryService.updateInventory(inventory, warehouseId);
+    @PutMapping("/update")
+    public ApiResponse updateInventory(@RequestBody Inventory updatedInventory) {
+        return inventoryService.updateInventory(updatedInventory);
     }
 
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteInventoryById(@PathVariable long id) {
         return inventoryService.deleteInventoryById(id);
-    }
-
-    @GetMapping("/{id}/products")
-    public ApiResponse getProductsByInventoryId(@PathVariable Long id) {
-        return inventoryService.getProductsByInventoryId(id);
     }
 }

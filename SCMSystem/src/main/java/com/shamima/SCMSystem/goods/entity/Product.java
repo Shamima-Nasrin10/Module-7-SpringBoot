@@ -30,7 +30,6 @@ public class Product {
 
     private String batch;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "inventory_id")
     private Inventory inventory;

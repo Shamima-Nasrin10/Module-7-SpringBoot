@@ -127,18 +127,4 @@ public class WarehouseService {
         return apiResponse;
     }
 
-    // New Method: Get products by inventory
-    public ApiResponse getProductsByInventoryId(Long inventoryId) {
-        ApiResponse apiResponse = new ApiResponse(false);
-        try {
-            Inventory inventory = inventoryRepository.findById(inventoryId)
-                    .orElseThrow(() -> new RuntimeException("Inventory not found"));
-            List<Product> products = inventory.getProducts(); // Assuming the relationship is set correctly
-            apiResponse.setSuccess(true);
-            apiResponse.setData("products", products);
-        } catch (Exception e) {
-            apiResponse.setMessage(e.getMessage());
-        }
-        return apiResponse;
-    }
 }

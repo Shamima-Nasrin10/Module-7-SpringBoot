@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -103,6 +104,26 @@ public class ProductService {
             apiResponse.setMessage("Product deleted successfully.");
         } catch (Exception e) {
             apiResponse.setMessage("Error deleting product: " + e.getMessage());
+        }
+        return apiResponse;
+    }
+
+
+    public ApiResponse getProductsByInventoryId(Long inventoryId) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Inventory inventory = inventoryRepository.findById(inventoryId)
+                    .orElse(null);
+            if (inventory == null) {
+                apiResponse.setMessage("Inventory not found");
+                return apiResponse;
+            }
+
+            List<Product> products = productRepository.findAllByInventoryId(inventoryId).orElse(new ArrayList<>());
+            apiResponse.setSuccess(true);
+            apiResponse.setData("products", products);
+        } catch (Exception e) {
+            apiResponse.setMessage("Failed to fetch products: " + e.getMessage());
         }
         return apiResponse;
     }

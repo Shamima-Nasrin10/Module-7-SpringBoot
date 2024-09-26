@@ -39,4 +39,9 @@ public class ProductController {
     public ApiResponse deleteProductById(@PathVariable Long id) {
         return productService.deleteProductById(id);
     }
+
+    @GetMapping("/getProductsByInventoryId")
+    public ApiResponse getProductsByInventoryId(@RequestParam Long inventoryId) {
+        return productService.getProductsByInventoryId(inventoryId);
+    }
 }

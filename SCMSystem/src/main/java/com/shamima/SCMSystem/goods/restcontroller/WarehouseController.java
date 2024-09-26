@@ -49,10 +49,4 @@ public class WarehouseController {
         return warehouseService.addInventoryToWarehouse(warehouseId, inventory);
     }
 
-    // New endpoint: Get products by inventory
-    @GetMapping("/inventories/{inventoryId}/products")
-    public ApiResponse getProductsByInventoryId(@PathVariable Long inventoryId) {
-        return warehouseService.getProductsByInventoryId(inventoryId);
-    }
-
 }

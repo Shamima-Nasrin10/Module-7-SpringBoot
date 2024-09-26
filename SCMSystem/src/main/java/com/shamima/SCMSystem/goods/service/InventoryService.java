@@ -26,12 +26,12 @@ public class InventoryService {
 
 
     @Transactional
-    public ApiResponse saveInventory(Inventory inventory, Long warehouseId) {
+    public ApiResponse saveInventory(Inventory inventory) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Warehouse warehouse = warehouseRepository.findById(warehouseId).orElse(null);
+            Warehouse warehouse = warehouseRepository.findById(inventory.getWarehouse().getId()).orElse(null);
             if (warehouse == null) {
-                apiResponse.setMessage("Warehouse not found with ID: " + warehouseId);
+                apiResponse.setMessage("Warehouse not found");
                 return apiResponse;
             }
 
@@ -76,15 +76,19 @@ public class InventoryService {
     }
 
     @Transactional
-    public ApiResponse updateInventory(Inventory updatedInventory, Long warehouseId) {
+    public ApiResponse updateInventory(Inventory updatedInventory) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Inventory existingInventory = inventoryRepository.findById(updatedInventory.getId())
-                    .orElseThrow(() -> new RuntimeException("Inventory not found with ID: " + updatedInventory.getId()));
-
-            Warehouse warehouse = warehouseRepository.findById(warehouseId)
-                    .orElseThrow(() -> new RuntimeException("Warehouse not found with ID: " + warehouseId));
-
+            Inventory existingInventory = inventoryRepository.findById(updatedInventory.getId()).orElse(null);
+            if (existingInventory == null) {
+                apiResponse.setMessage("Inventory not found");
+                return apiResponse;
+            }
+            Warehouse warehouse = warehouseRepository.findById(updatedInventory.getWarehouse().getId()).orElse(null);
+            if (warehouse == null) {
+                apiResponse.setMessage("Warehouse not found");
+                return apiResponse;
+            }
             existingInventory.setName(updatedInventory.getName());
             existingInventory.setCapacity(updatedInventory.getCapacity());
             existingInventory.setWarehouse(warehouse);
@@ -118,16 +122,20 @@ public class InventoryService {
         return apiResponse;
     }
 
-    public ApiResponse getProductsByInventoryId(Long inventoryId) {
+    public ApiResponse getInventoriesByWarehouseId(Long warehouseId) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Inventory inventory = inventoryRepository.findById(inventoryId)
-                    .orElseThrow(() -> new RuntimeException("Inventory not found"));
-            List<Product> products = inventory.getProducts();
+            Warehouse warehouse = warehouseRepository.findById(warehouseId)
+                    .orElse(null);
+            if (warehouse == null) {
+                apiResponse.setMessage("Warehouse not found");
+                return apiResponse;
+            }
+            List<Inventory> inventories = warehouse.getInventories();
             apiResponse.setSuccess(true);
-            apiResponse.setData("products", products);
+            apiResponse.setData("inventories", inventories);
         } catch (Exception e) {
-            apiResponse.setMessage("Failed to fetch products: " + e.getMessage());
+            apiResponse.setMessage("Failed to fetch inventories: " + e.getMessage());
         }
         return apiResponse;
     }
