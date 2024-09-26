@@ -13,16 +13,19 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-
-    @PostMapping("/save")
-    public ApiResponse saveProduct(@RequestBody Product product, @RequestParam Long inventoryId) {
-        return productService.saveProduct(product, inventoryId);
+    @GetMapping("/getByNameAndUnitPrice")
+    public ApiResponse getByNameAndUnitPrice(@RequestParam String name, @RequestParam Double unitPrice) {
+        return productService.getByNameAndUnitPrice(name, unitPrice);
     }
 
+    @PostMapping("/save")
+    public ApiResponse saveProduct(@RequestBody Product product) {
+        return productService.saveProduct(product);
+    }
 
     @PutMapping("/update")
-    public ApiResponse updateProduct(@RequestBody Product product, @RequestParam Long inventoryId) {
-        return productService.updateProduct(product, inventoryId);
+    public ApiResponse updateProduct(@RequestBody Product product) {
+        return productService.updateProduct(product);
     }
 
     @GetMapping("/list")

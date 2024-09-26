@@ -2,6 +2,7 @@ package com.shamima.SCMSystem.goods.service;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
 import com.shamima.SCMSystem.goods.entity.Product;
+import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
 import com.shamima.SCMSystem.goods.repository.ProductRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
@@ -21,17 +22,49 @@ public class ProductService {
     private InventoryRepository inventoryRepository;
 
     @Transactional
-    public ApiResponse saveProduct(Product product, Long inventoryId) {
+    public ApiResponse getByNameAndUnitPrice(String name, Double unitPrice) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Inventory inventory = inventoryRepository.findById(inventoryId)
-                    .orElseThrow(() -> new RuntimeException("Inventory not found with ID: " + inventoryId));
+            Product existingProduct = productRepository.findByNameAndUnitPrice(name, unitPrice)
+                    .orElse(null);
 
-            product.setInventory(inventory);
-            productRepository.save(product);
-
+            apiResponse.setData("product", existingProduct);
             apiResponse.setSuccess(true);
-            apiResponse.setMessage("Product saved successfully.");
+        } catch (Exception e) {
+            apiResponse.setMessage("Error while saving product: " + e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    @Transactional
+    public ApiResponse saveProduct(Product product) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Inventory inventory = inventoryRepository.findById(product.getInventory().getId())
+                    .orElse(null);
+            if (inventory == null) {
+                apiResponse.setMessage("Inventory not found");
+                return apiResponse;
+            }
+
+            Product existingProduct = null;
+            if (product.getId() != null) {
+                existingProduct = productRepository.findById(product.getId())
+                        .orElse(null);
+            }
+
+            if (existingProduct != null) {
+                existingProduct.setUnit(RawMaterial.Unit.PIECE); //TODO remove
+                existingProduct.setStock(existingProduct.getStock() + product.getStock());
+                productRepository.save(existingProduct);
+                apiResponse.setMessage("Stock updated successfully.");
+            } else {
+                product.setUnit(RawMaterial.Unit.PIECE); //TODO remove
+                product.setInventory(inventory);
+                productRepository.save(product);
+                apiResponse.setMessage("Product saved successfully.");
+            }
+            apiResponse.setSuccess(true);
         } catch (Exception e) {
             apiResponse.setMessage("Error while saving product: " + e.getMessage());
         }
@@ -40,14 +73,23 @@ public class ProductService {
 
 
     @Transactional
-    public ApiResponse updateProduct(Product updatedProduct, Long inventoryId) {
+    public ApiResponse updateProduct(Product updatedProduct) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
             Product existingProduct = productRepository.findById(updatedProduct.getId())
-                    .orElseThrow(() -> new RuntimeException("Product not found with ID: " + updatedProduct.getId()));
+                    .orElse(null);
 
-            Inventory inventory = inventoryRepository.findById(inventoryId)
-                    .orElseThrow(() -> new RuntimeException("Inventory not found with ID: " + inventoryId));
+            if (existingProduct == null) {
+                apiResponse.setMessage("Product not found");
+                return apiResponse;
+            }
+
+            Inventory inventory = inventoryRepository.findById(updatedProduct.getInventory().getId())
+                    .orElse(null);
+            if (inventory == null) {
+                apiResponse.setMessage("Inventory not found");
+                return apiResponse;
+            }
 
             existingProduct.setName(updatedProduct.getName());
             existingProduct.setUnitPrice(updatedProduct.getUnitPrice());
@@ -82,8 +124,11 @@ public class ProductService {
     public ApiResponse findProductById(long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Product product = productRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
+            Product product = productRepository.findById(id).orElse(null);
+            if (product == null) {
+                apiResponse.setMessage("Product not found");
+                return apiResponse;
+            }
             apiResponse.setSuccess(true);
             apiResponse.setData("product", product);
         } catch (Exception e) {
@@ -97,8 +142,11 @@ public class ProductService {
     public ApiResponse deleteProductById(long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Product product = productRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
+            Product product = productRepository.findById(id).orElse(null);
+            if (product == null) {
+                apiResponse.setMessage("Product not found");
+                return apiResponse;
+            }
             productRepository.deleteById(id);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Product deleted successfully.");
