@@ -42,12 +42,12 @@ public class Retailer {
     @Column(name = "postal_code")
     private String postalCode;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
-
-    @ManyToOne
-    @JoinColumn(name = "city_id", nullable = false)
-    private City city;
+//    @ManyToOne
+//    @JoinColumn(name = "country_id", nullable = false)
+//    private Country country;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "city_id", nullable = false)
+//    private City city;
     
 }
