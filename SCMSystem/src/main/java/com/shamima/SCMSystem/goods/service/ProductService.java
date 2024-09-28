@@ -40,6 +40,7 @@ public class ProductService {
     public ApiResponse saveProduct(Product product) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            // Check if the inventory exists
             Inventory inventory = inventoryRepository.findById(product.getInventory().getId())
                     .orElse(null);
             if (inventory == null) {
@@ -47,29 +48,30 @@ public class ProductService {
                 return apiResponse;
             }
 
-            Product existingProduct = null;
-            if (product.getId() != null) {
-                existingProduct = productRepository.findById(product.getId())
-                        .orElse(null);
-            }
+            // Check if a product with the same name and unit price exists
+            Product existingProduct = productRepository.findByNameAndUnitPrice(product.getName(), product.getUnitPrice())
+                    .orElse(null);
 
             if (existingProduct != null) {
-                existingProduct.setUnit(RawMaterial.Unit.PIECE); //TODO remove
+                // If product exists, update the stock
                 existingProduct.setStock(existingProduct.getStock() + product.getStock());
                 productRepository.save(existingProduct);
                 apiResponse.setMessage("Stock updated successfully.");
             } else {
-                product.setUnit(RawMaterial.Unit.PIECE); //TODO remove
+                // Product does not exist, create a new product
                 product.setInventory(inventory);
+                product.setUnit(RawMaterial.Unit.PIECE);  // Set unit, can be customized
                 productRepository.save(product);
                 apiResponse.setMessage("Product saved successfully.");
             }
+
             apiResponse.setSuccess(true);
         } catch (Exception e) {
             apiResponse.setMessage("Error while saving product: " + e.getMessage());
         }
         return apiResponse;
     }
+
 
 
     @Transactional
