@@ -40,7 +40,7 @@ public class ProductService {
     public ApiResponse saveProduct(Product product) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            // Check if the inventory exists
+
             Inventory inventory = inventoryRepository.findById(product.getInventory().getId())
                     .orElse(null);
             if (inventory == null) {
@@ -48,7 +48,6 @@ public class ProductService {
                 return apiResponse;
             }
 
-            // Check if a product with the same name and unit price exists
             Product existingProduct = productRepository.findByNameAndUnitPrice(product.getName(), product.getUnitPrice())
                     .orElse(null);
 
@@ -60,7 +59,7 @@ public class ProductService {
             } else {
                 // Product does not exist, create a new product
                 product.setInventory(inventory);
-                product.setUnit(RawMaterial.Unit.PIECE);  // Set unit, can be customized
+                product.setUnit(RawMaterial.Unit.PIECE);
                 productRepository.save(product);
                 apiResponse.setMessage("Product saved successfully.");
             }
