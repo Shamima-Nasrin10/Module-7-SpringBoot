@@ -25,7 +25,7 @@ public class SalesService {
     @Autowired
     private SalesDetailsRepository salesDetailsRepository;
 
-    // Get all Sales
+
     public ApiResponse getAllSales() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
@@ -65,16 +65,16 @@ public class SalesService {
                 salesDetails.setUnitPrice(product.getUnitPrice());
                 salesDetails.setDiscount(sales.getDiscount());
 
-                // Apply discount (if any) to calculate total price
-                double discount = sales.getDiscount();  // Discount from Sales entity
+
+                double discount = sales.getDiscount();
                 double unitPrice = product.getUnitPrice();
                 long quantity = soldProduct.getQuantity();
 
-                // Calculate total price after discount
+
                 double totalPrice = quantity * unitPrice * (1 - discount / 100);
                 salesDetails.setTotalPrice(totalPrice);
 
-                // Save the sales details
+
                 salesDetailsRepository.save(salesDetails);
             }
 

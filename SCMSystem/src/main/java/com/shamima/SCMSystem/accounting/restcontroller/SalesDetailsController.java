@@ -18,27 +18,11 @@ public class SalesDetailsController {
 
     @GetMapping("/list")
     public ApiResponse getAllSalesDetails() {
-        ApiResponse apiResponse = new ApiResponse(false);
-        try {
-            ApiResponse salesDetailsList = salesDetailsService.getAllSalesDetails();
-            apiResponse.setSuccess(true);
-            apiResponse.setData("salesDetails", salesDetailsList);
-        } catch (Exception e) {
-            apiResponse.setMessage(e.getMessage());
-        }
-        return apiResponse;
+        return salesDetailsService.getAllSalesDetails();
     }
 
     @GetMapping("/grouped")
     public ApiResponse getGroupedSalesDetails() {
-        ApiResponse apiResponse = new ApiResponse(false);
-        try {
-            ApiResponse groupedSalesDetails = salesDetailsService.getSalesDetailsGroupedBySalesId();
-            apiResponse.setSuccess(true);
-            apiResponse.setData("groupedSalesDetails", groupedSalesDetails);
-        } catch (Exception e) {
-            apiResponse.setMessage(e.getMessage());
-        }
-        return apiResponse;
+        return salesDetailsService.getSalesDetailsGroupedBySalesId();
     }
 }
