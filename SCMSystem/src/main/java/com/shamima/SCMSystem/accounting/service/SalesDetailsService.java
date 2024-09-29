@@ -16,7 +16,7 @@ public class SalesDetailsService {
     @Autowired
     private SalesDetailsRepository salesDetailRepository;
 
-    // Get all Sales Details
+
     public ApiResponse getAllSalesDetails() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
@@ -29,13 +29,12 @@ public class SalesDetailsService {
         return apiResponse;
     }
 
-    // Get Sales Details grouped by Sales ID
+
     public ApiResponse getSalesDetailsGroupedBySalesId() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
             List<SalesDetails> allSalesDetails = salesDetailRepository.findAll();
 
-            // Group by sales ID
             Map<Long, List<SalesDetails>> groupedSalesDetails = allSalesDetails.stream()
                     .collect(Collectors.groupingBy(sd -> sd.getSale().getId()));
 
