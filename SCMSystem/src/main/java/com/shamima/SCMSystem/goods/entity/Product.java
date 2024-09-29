@@ -28,6 +28,8 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
+    private Integer quantity;
+
     private String batch;
 
     @ManyToOne(fetch = FetchType.EAGER)
