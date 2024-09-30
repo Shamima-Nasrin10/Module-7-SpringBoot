@@ -1,4 +1,5 @@
 package com.shamima.SCMSystem.accounting.restcontroller;
+import com.shamima.SCMSystem.accounting.entity.SalesDetails;
 import com.shamima.SCMSystem.accounting.service.SalesDetailsService;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;

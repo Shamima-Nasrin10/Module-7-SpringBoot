@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface SalesDetailsRepository extends JpaRepository<SalesDetails, Long> {
 
-//    List<SalesDetails> findBySaleId(long salesId);
+    List<SalesDetails> findBySaleId(long salesId);
 //    List<SalesDetails> findSalesDetailsGroupedBySalesId();
 }

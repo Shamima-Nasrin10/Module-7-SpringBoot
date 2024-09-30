@@ -20,9 +20,9 @@ public class SalesDetailsService {
     public ApiResponse getAllSalesDetails() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            List<SalesDetails> salesDetailsList = salesDetailRepository.findAll();
+            List<SalesDetails> allSalesDetails = salesDetailRepository.findAll();
             apiResponse.setSuccess(true);
-            apiResponse.setData("salesDetails", salesDetailsList);
+            apiResponse.setData("salesDetails", allSalesDetails);
         } catch (Exception e) {
             apiResponse.setMessage(e.getMessage());
         }

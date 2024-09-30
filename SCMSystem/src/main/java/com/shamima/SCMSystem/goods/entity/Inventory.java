@@ -48,10 +48,4 @@ public class Inventory {
         this.lastUpdatedDate = LocalDateTime.now();
     }
 
-    private InventoryCategory category;
-
-    public enum InventoryCategory {
-        PRODUCT,
-        RAW_MATERIAL
-    }
 }

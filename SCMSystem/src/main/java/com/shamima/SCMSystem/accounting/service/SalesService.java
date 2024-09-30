@@ -45,38 +45,30 @@ public class SalesService {
             // Save the sale first to get the generated ID
             Sales savedSales = salesRepository.save(sales);
 
-            for (Product soldProduct : savedSales.getProduct()) {
+            // Update product stock
+            // Create SalesDetails for each product
+            savedSales.getProduct().forEach(soldProduct -> {
                 Product product = productRepository.findById(soldProduct.getId())
                         .orElseThrow(() -> new RuntimeException("Product not found with ID " + soldProduct.getId()));
-
-                // Update product stock
                 int newStock = product.getStock() - soldProduct.getQuantity();
                 if (newStock < 0) {
                     throw new RuntimeException("Not enough stock for product " + product.getName());
                 }
                 product.setStock(newStock);
                 productRepository.save(product);
-
-                // Create SalesDetails for each product
                 SalesDetails salesDetails = new SalesDetails();
                 salesDetails.setSale(savedSales);
                 salesDetails.setProduct(product);
                 salesDetails.setQuantity(soldProduct.getQuantity());
                 salesDetails.setUnitPrice(product.getUnitPrice());
                 salesDetails.setDiscount(sales.getDiscount());
-
-
                 double discount = sales.getDiscount();
                 double unitPrice = product.getUnitPrice();
                 long quantity = soldProduct.getQuantity();
-
-
                 double totalPrice = quantity * unitPrice * (1 - discount / 100);
                 salesDetails.setTotalPrice(totalPrice);
-
-
                 salesDetailsRepository.save(salesDetails);
-            }
+            });
 
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Sales saved successfully");

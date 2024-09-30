@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +37,19 @@ public class Sales {
 
     @JsonIgnore
     @ManyToMany
-    private List<Product> product;
+    private List<Product> product=new ArrayList<>();
+
+    public List<Product> getProduct(){
+        return product;
+    }
 
 
-    @ManyToOne
-    private SalesDetails salesDetails;
+    public void setProduct(List<Product> product) {
+        this.product = product;
+    }
+
+
+//    @ManyToOne
+//    private SalesDetails salesDetails;
 
 }

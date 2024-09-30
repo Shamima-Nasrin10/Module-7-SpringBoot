@@ -32,12 +32,12 @@ public class Product {
 
     private String batch;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "inventory_id")
+    @ManyToOne
+    @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "unit", nullable = false)
+    @Column(name = "unit")
     private RawMaterial.Unit unit;
 
     public enum Unit {

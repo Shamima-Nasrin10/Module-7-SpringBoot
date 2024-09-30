@@ -92,7 +92,6 @@ public class InventoryService {
             existingInventory.setName(updatedInventory.getName());
             existingInventory.setCapacity(updatedInventory.getCapacity());
             existingInventory.setWarehouse(warehouse);
-            existingInventory.setCategory(updatedInventory.getCategory());
 
             inventoryRepository.save(existingInventory);
             apiResponse.setSuccess(true);
