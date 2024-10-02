@@ -21,24 +21,27 @@ public class RawMaterial {
     @Column(name = "name", nullable = false)
     private String name;
     
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private Double price;
     
-    @Column(name = "quantity", nullable = false)
-    private Double quantity;
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "stock")
+    private Integer stock;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "unit", nullable = false)
+    @Column(name = "unit")
     private Unit unit;
 
 
     private String image;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
     private RawMaterialCategory category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(name = "supplier_id", nullable = false)
     private RawMaterialSupplier supplier;
 
