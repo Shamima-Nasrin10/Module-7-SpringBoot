@@ -2,15 +2,9 @@ package com.shamima.SCMSystem.accounting.service;
 
 import com.shamima.SCMSystem.accounting.entity.Procurement;
 import com.shamima.SCMSystem.accounting.entity.ProcurementDetails;
-import com.shamima.SCMSystem.accounting.entity.Sales;
-import com.shamima.SCMSystem.accounting.entity.SalesDetails;
 import com.shamima.SCMSystem.accounting.repository.ProcurementDetailsRepository;
 import com.shamima.SCMSystem.accounting.repository.ProcurementRepository;
-import com.shamima.SCMSystem.accounting.repository.SalesDetailsRepository;
-import com.shamima.SCMSystem.accounting.repository.SalesRepository;
-import com.shamima.SCMSystem.goods.entity.Product;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
-import com.shamima.SCMSystem.goods.repository.ProductRepository;
 import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;

@@ -45,11 +45,13 @@ public class RawMaterial {
     @JoinColumn(name = "supplier_id", nullable = false)
     private RawMaterialSupplier supplier;
 
+    @ManyToOne() // This establishes the relationship with Inventory
+    @JoinColumn(name = "inventory_id", nullable = false) // Foreign key column in RawMaterial
+    private Inventory inventory;
+
     public enum Unit {
-        METER,
+        LETTER,
         PIECE,
-        FEET,
-        INCH,
         KG,
         GRAM
     }

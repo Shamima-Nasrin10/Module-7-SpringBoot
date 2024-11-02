@@ -1,18 +1,16 @@
-package com.shamima.SCMSystem.goods.service;
+package com.shamima.SCMSystem.production.service;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
-import com.shamima.SCMSystem.goods.entity.Product;
-import com.shamima.SCMSystem.goods.entity.Warehouse;
+import com.shamima.SCMSystem.production.entity.Warehouse;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
-import com.shamima.SCMSystem.goods.repository.ProductRepository;
-import com.shamima.SCMSystem.goods.repository.WarehouseRepository;
+import com.shamima.SCMSystem.production.repository.ProductRepository;
+import com.shamima.SCMSystem.production.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class WarehouseService {

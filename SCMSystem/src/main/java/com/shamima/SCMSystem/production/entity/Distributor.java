@@ -1,7 +1,5 @@
 package com.shamima.SCMSystem.production.entity;
 
-import com.shamima.SCMSystem.location.entity.City;
-import com.shamima.SCMSystem.location.entity.Country;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "retailers")
-public class Retailer {
+public class Distributor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

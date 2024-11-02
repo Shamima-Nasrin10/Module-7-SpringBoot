@@ -1,6 +1,7 @@
-package com.shamima.SCMSystem.goods.entity;
+package com.shamima.SCMSystem.production.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.shamima.SCMSystem.goods.entity.Inventory;
+import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,19 +33,17 @@ public class Product {
 
     private String batch;
 
-    @ManyToOne
-    @JoinColumn(name = "inventory_id")
-    private Inventory inventory;
+    @ManyToOne() // Establishing the relationship with Warehouse
+    @JoinColumn(name = "warehouse_id", nullable = false) // Foreign key column in Product
+    private Warehouse warehouse;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "unit")
     private RawMaterial.Unit unit;
 
     public enum Unit {
-        METER,
+        LETTER,
         PIECE,
-        FEET,
-        INCH,
         KG,
         GRAM
     }

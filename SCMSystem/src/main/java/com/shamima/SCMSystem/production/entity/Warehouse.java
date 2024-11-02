@@ -1,13 +1,10 @@
-package com.shamima.SCMSystem.goods.entity;
+package com.shamima.SCMSystem.production.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -26,7 +23,4 @@ public class Warehouse {
     @Column(nullable = false)
     private String location;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<Inventory> inventories;
 }

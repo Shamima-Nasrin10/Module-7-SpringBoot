@@ -27,9 +27,6 @@ public class Inventory {
     @Column(nullable = false)
     private long capacity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "warehouse_id")
-    private Warehouse warehouse;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;

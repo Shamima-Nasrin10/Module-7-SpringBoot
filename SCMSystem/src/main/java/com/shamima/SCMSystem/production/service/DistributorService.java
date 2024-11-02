@@ -1,7 +1,7 @@
 package com.shamima.SCMSystem.production.service;
 
-import com.shamima.SCMSystem.production.entity.Retailer;
-import com.shamima.SCMSystem.production.repository.RetailerRepository;
+import com.shamima.SCMSystem.production.entity.Distributor;
+import com.shamima.SCMSystem.production.repository.DistributorRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RetailerService {
+public class DistributorService {
 
     @Autowired
-    private RetailerRepository retailerRepository;
+    private DistributorRepository retailerRepository;
 
     public ApiResponse getAllRetailers() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            List<Retailer> retailers = retailerRepository.findAll();
+            List<Distributor> retailers = retailerRepository.findAll();
             apiResponse.setSuccess(true);
             apiResponse.setData("retailers", retailers);
             return apiResponse;
@@ -27,7 +27,7 @@ public class RetailerService {
         }
     }
 
-    public ApiResponse saveRetailer(Retailer retailer) {
+    public ApiResponse saveRetailer(Distributor retailer) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
             retailerRepository.save(retailer);
@@ -40,10 +40,10 @@ public class RetailerService {
         }
     }
 
-    public ApiResponse updateRetailer(Retailer retailer) {
+    public ApiResponse updateRetailer(Distributor retailer) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Retailer existingRetailer = retailerRepository.findById(retailer.getId()).orElse(null);
+            Distributor existingRetailer = retailerRepository.findById(retailer.getId()).orElse(null);
             if (existingRetailer == null) {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;
@@ -61,7 +61,7 @@ public class RetailerService {
     public ApiResponse deleteRetailer(Long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Retailer retailer = retailerRepository.findById(id).orElse(null);
+            Distributor retailer = retailerRepository.findById(id).orElse(null);
             if (retailer == null) {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;
@@ -79,7 +79,7 @@ public class RetailerService {
     public ApiResponse getRetailerById(Long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Retailer retailer = retailerRepository.findById(id).orElse(null);
+            Distributor retailer = retailerRepository.findById(id).orElse(null);
             if (retailer == null) {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;

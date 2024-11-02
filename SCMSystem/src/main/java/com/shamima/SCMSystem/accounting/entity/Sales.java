@@ -1,8 +1,8 @@
 package com.shamima.SCMSystem.accounting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.shamima.SCMSystem.goods.entity.Product;
-import com.shamima.SCMSystem.production.entity.Retailer;
+import com.shamima.SCMSystem.production.entity.Product;
+import com.shamima.SCMSystem.production.entity.Distributor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class Sales {
 
     @ManyToOne
     @JoinColumn(name = "retailer_id")
-    private Retailer retailer;
+    private Distributor retailer;
     private Date salesdate;
     private int totalprice;
 

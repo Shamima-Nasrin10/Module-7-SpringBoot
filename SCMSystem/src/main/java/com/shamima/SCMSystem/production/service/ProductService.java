@@ -1,10 +1,11 @@
-package com.shamima.SCMSystem.goods.service;
+package com.shamima.SCMSystem.production.service;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
-import com.shamima.SCMSystem.goods.entity.Product;
+import com.shamima.SCMSystem.production.entity.Product;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
-import com.shamima.SCMSystem.goods.repository.ProductRepository;
+import com.shamima.SCMSystem.production.repository.ProductRepository;
+import com.shamima.SCMSystem.production.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private InventoryRepository inventoryRepository;
+    private WarehouseRepository warehouseRepository;
 
     @Transactional
     public ApiResponse getByNameAndUnitPrice(String name, Double unitPrice) {
@@ -41,7 +42,7 @@ public class ProductService {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
 
-            Inventory inventory = inventoryRepository.findById(product.getInventory().getId())
+            Inventory inventory = warehouseRepository.findById(product.get().getId())
                     .orElse(null);
             if (inventory == null) {
                 apiResponse.setMessage("Inventory not found");

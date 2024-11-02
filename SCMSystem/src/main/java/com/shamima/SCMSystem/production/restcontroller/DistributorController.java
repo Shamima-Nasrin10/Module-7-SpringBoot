@@ -1,17 +1,17 @@
 package com.shamima.SCMSystem.production.restcontroller;
 
 
-import com.shamima.SCMSystem.production.entity.Retailer;
-import com.shamima.SCMSystem.production.service.RetailerService;
+import com.shamima.SCMSystem.production.entity.Distributor;
+import com.shamima.SCMSystem.production.service.DistributorService;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/retailer")
-public class RetailerController {
+public class DistributorController {
     @Autowired
-    private RetailerService retailerService;
+    private DistributorService retailerService;
 
     @GetMapping("/list")
     public ApiResponse getAllRetailers() {
@@ -24,12 +24,12 @@ public class RetailerController {
     }
 
     @PostMapping("/save")
-    public ApiResponse saveRetailer(@RequestBody Retailer retailer) {
+    public ApiResponse saveRetailer(@RequestBody Distributor retailer) {
         return retailerService.saveRetailer(retailer);
     }
 
     @PutMapping("/update")
-    public ApiResponse updateRetailer(@RequestBody Retailer retailer) {
+    public ApiResponse updateRetailer(@RequestBody Distributor retailer) {
         return retailerService.updateRetailer(retailer);
     }
 
